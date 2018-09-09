@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.8.23)  10 SEP 2018 02:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.8.23)  10 SEP 2018 03:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -115,7 +115,7 @@ LaTeX Font Info:    ... okay on input line 20.
 * \marginparwidth=4.0pt
 * \marginparsep=10.0pt
 * \columnsep=28.90755pt
-* \skip\footins= 4.0pt minus 2.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -133,57 +133,93 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 22.
 
 (/usr/local/texlive/2018/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
-
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 103--107
+)
+Underfull \hbox (badness 10000) in paragraph at lines 38--45
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 113--117
+Underfull \hbox (badness 2512) in paragraph at lines 46--53
+\OT1/cmr/m/n/10 de-formable sur-face mod-els such as the Skinned
+ []
+
+
+Underfull \hbox (badness 2245) in paragraph at lines 46--53
+\OT1/cmr/m/n/10 scans of dif-fer-ent peo-ple, em-u-late re-al-ity where
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 46--53
 
  []
 
-! Too many }'s.
-l.137 	}
-        
-? 
-! Emergency stop.
-l.137 	}
-        
-End of file on the terminal!
 
- 
-Here is how much of TeX's memory you used:
- 1170 strings out of 494587
- 15364 string characters out of 6177424
- 79472 words of memory out of 5000000
- 4833 multiletter control sequences out of 15000+600000
- 11849 words of font info for 46 fonts, out of 8000000 for 9000
- 14 hyphenation exceptions out of 8191
- 25i,7n,32p,215b,217s stack positions out of 5000i,500n,10000p,200000b,80000s
-!  ==> Fatal error occurred, no output PDF file produced!
- out of 6177424
- 79472 words of memory out of 5000000
- 4833 multiletter control sequences out of 15000+600000
- 11849 words of font info for 46 fonts, out of 8000000 for 9000
- 14 hyphenation exceptions out of 8191
- 25i,7n,32p,215b,217s stack positions out of 5000i,500n,10000p,200000b,80000s
-!  ==> Fatal error occurred, no output PDF file produced!
-TeX's memory you used:
- 1167 strings out of 494587
- 15334 string characters out of 6177424
- 79437 words of memory out of 5000000
- 4830 multiletter control sequences out of 15000+600000
- 11849 words of font info for 46 fonts, out of 8000000 for 9000
- 14 hyphenation exceptions out of 8191
- 25i,7n,32p,215b,217s stack positions out of 5000i,500n,10000p,200000b,80000s
-!  ==> Fatal error occurred, no output PDF file produced!
-25i,7n,32p,215b,217s stack positions out of 5000i,500n,10000p,200000b,80000s
-!  ==> Fatal error occurred, no output PDF file produced!
+Underfull \hbox (badness 1596) in paragraph at lines 54--64
+\OT1/cmr/m/n/10 it-er-a-tive op-ti-miza-tion has the least er-ror among
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 54--64
+
+ []
+
+[1{/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+
+
 ]
+Underfull \hbox (badness 10000) in paragraph at lines 106--110
+
+ []
+
+
+Underfull \hbox (badness 1137) in paragraph at lines 111--117
+\OT1/cmr/m/n/10 are rem-i-nis-cent of con-cepts of hu-man form, like
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 130--134
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 140--144
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--159
+
+ []
+
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 201--205
+
+ []
+
+
+Underfull \hbox (badness 1152) in paragraph at lines 206--213
+[]\OT1/cmr/m/n/10 In an end-to-end learn-ing task where the sole
+ []
+
+
+Underfull \hbox (badness 1242) in paragraph at lines 206--213
+\OT1/cmr/m/n/10 of 2D sil-hou-ette seg-men-ta-tions, as-so-ci-at-ing ev-ery
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 206--213
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 228--232
+
+ []
+
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 235--242
+
+ []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 265--268
