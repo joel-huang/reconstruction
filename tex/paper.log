@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.8.23)  9 SEP 2018 14:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.8.23)  10 SEP 2018 02:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -99,15 +99,15 @@ LaTeX Font Info:    ... okay on input line 20.
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
-* h-part:(L,W,R)=(54.2025pt, 505.89pt, 54.2025pt)
-* v-part:(T,H,B)=(54.2025pt, 632.36249pt, 108.405pt)
+* h-part:(L,W,R)=(57.81621pt, 498.66258pt, 57.81621pt)
+* v-part:(T,H,B)=(57.81621pt, 646.81628pt, 90.3375pt)
 * \paperwidth=614.295pt
 * \paperheight=794.96999pt
-* \textwidth=505.89pt
-* \textheight=632.36249pt
-* \oddsidemargin=-18.06749pt
-* \evensidemargin=-18.06749pt
-* \topmargin=-55.06749pt
+* \textwidth=498.66258pt
+* \textheight=646.81628pt
+* \oddsidemargin=-14.45378pt
+* \evensidemargin=-14.45378pt
+* \topmargin=-51.45378pt
 * \headheight=12.0pt
 * \headsep=25.0pt
 * \topskip=10.0pt
@@ -115,7 +115,7 @@ LaTeX Font Info:    ... okay on input line 20.
 * \marginparwidth=4.0pt
 * \marginparsep=10.0pt
 * \columnsep=28.90755pt
-* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \skip\footins= 4.0pt minus 2.0pt
 * \hoffset=0.0pt
 * \voffset=0.0pt
 * \mag=1000
@@ -137,56 +137,97 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 103--106
+Underfull \hbox (badness 10000) in paragraph at lines 103--107
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 112--116
+Underfull \hbox (badness 10000) in paragraph at lines 113--117
 
  []
 
-(./paper.bbl
-Underfull \vbox (badness 10000) has occurred while \output is active []
+! Too many }'s.
+l.137 	}
+        
+? 
+! Emergency stop.
+l.137 	}
+        
+End of file on the terminal!
 
- [2]
-Underfull \hbox (badness 3396) in paragraph at lines 13--16
-[]\OT1/cmr/m/n/10 R. A. Guler, G. Tri-ge-or-gis, E. An-ton-akos,
- []
-
-
-Underfull \hbox (badness 1142) in paragraph at lines 18--20
-[]\OT1/cmr/m/n/10 R. A. Guler, N. Neverova, and I. Kokki-nos,
- []
-
-) [3
-
-] (./paper.aux) ) 
+ 
 Here is how much of TeX's memory you used:
- 1175 strings out of 494587
- 15408 string characters out of 6177424
- 80472 words of memory out of 5000000
+ 1170 strings out of 494587
+ 15364 string characters out of 6177424
+ 79472 words of memory out of 5000000
  4833 multiletter control sequences out of 15000+600000
  11849 words of font info for 46 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  25i,7n,32p,215b,217s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmbx10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmbx12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmmi10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmmi7.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-r12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
-7.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.p
-fb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pf
-b></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-</usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><
-/usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.p
-fb>
-Output written on paper.pdf (3 pages, 143965 bytes).
+!  ==> Fatal error occurred, no output PDF file produced!
+ out of 6177424
+ 79472 words of memory out of 5000000
+ 4833 multiletter control sequences out of 15000+600000
+ 11849 words of font info for 46 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 25i,7n,32p,215b,217s stack positions out of 5000i,500n,10000p,200000b,80000s
+!  ==> Fatal error occurred, no output PDF file produced!
+TeX's memory you used:
+ 1167 strings out of 494587
+ 15334 string characters out of 6177424
+ 79437 words of memory out of 5000000
+ 4830 multiletter control sequences out of 15000+600000
+ 11849 words of font info for 46 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 25i,7n,32p,215b,217s stack positions out of 5000i,500n,10000p,200000b,80000s
+!  ==> Fatal error occurred, no output PDF file produced!
+25i,7n,32p,215b,217s stack positions out of 5000i,500n,10000p,200000b,80000s
+!  ==> Fatal error occurred, no output PDF file produced!
+]
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 265--268
+
+ []
+
+[4] (./paper.bbl
+Underfull \hbox (badness 2452) in paragraph at lines 33--37
+[]\OT1/cmr/m/n/10 R. A. Guler, G. Tri-ge-or-gis, E. An-ton-akos,
+ []
+
+[5]) [6
+
+] (./paper.aux) )
+(\end occurred inside a group at level 1)
+
+### simple group (level 1) entered at line 194 ({)
+### bottom level 
+Here is how much of TeX's memory you used:
+ 1179 strings out of 494587
+ 15434 string characters out of 6177424
+ 82511 words of memory out of 5000000
+ 4837 multiletter control sequences out of 15000+600000
+ 11849 words of font info for 46 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 25i,7n,32p,226b,217s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmbx10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmbx12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmex10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmmi10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmmi7.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
+2.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.
+pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
+></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+</usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></
+usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></u
+sr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
+>
+Output written on paper.pdf (6 pages, 175676 bytes).
 PDF statistics:
- 62 PDF objects out of 1000 (max. 8388607)
- 44 compressed objects within 1 object stream
+ 75 PDF objects out of 1000 (max. 8388607)
+ 53 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

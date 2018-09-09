@@ -1,5 +1,5 @@
 \documentclass[9pt,twocolumn]{article}
-\usepackage[margin=0.75in,bottom=1.5in,columnsep=.4in]{geometry}
+\usepackage[margin=0.8in,bottom=1.25in,columnsep=.4in]{geometry}
 \usepackage{indentfirst}
 \usepackage{amssymb}
 \usepackage{cite}
@@ -14,7 +14,7 @@
 \date{
     Singapore University of Technology and Design \\
     NCS Product R\&D, Singapore \\[2ex]
-	\today
+	31 August, 2018
 }
 
 \begin{document}
@@ -22,21 +22,26 @@
 \maketitle
 
 \begin{abstract}
-	Summarize the latest work on recovering 3D spatial information about humans
-	from a single photograph or video frame. %Propose a pipeline to achieve accurate
-	%real-time 3D reconstruction.
+	Recovering 3D spatial information about humans from a single photograph or video frame
+	can be assisted by posessing prior knowledge of human form. In human vision, we have
+	learnt, by experience and from birth, a mental model of what a person is supposed to
+	look like. Similarly, we can learn a latent representation of human form that machines
+	can understand. We do not understand our own form in three dimensional space - using a
+	parametric 3D body model, we can better represent the human form in its principal components.
+	Using this model, we can directly estimate body model parameters from photographs,
+	reconstructing human form that is both statistically representative of the human population,
+	and accurate to the context of the image.
 \end{abstract}
 
 \section{Introduction}
 
-	\par{Recovering spatial information about humans is a core problem in computer vision.
-	Once we teach machines to see us as we do ourselves, we unlock a huge realm of
+	\par{Once we teach machines to see us as we do ourselves, we unlock a huge realm of
 	possibilities, a future of which post-screen interfaces, vision-based analytics,
 	and hyper-realistic simulation are a part of. Traditionally, much of the work
 	in this field has focused on the problem of 2D \textbf{pose estimation}, defined as the
 	localization of human joints. While this abstraction of human form is intuitive
 	and has recently produced stunning results~\cite{openpose-paf}, it fails to retain
-	information	about the human form in three-dimensional space.}
+	information	about the human form in three-dimensional space.}\\
 
 	\par{There has been a series of works focused on recovering the human form from
 	photographs using a latent representation of the human body. Parametric	deformable
@@ -44,7 +49,7 @@
 	a learned 3D model of human shape from thousands of body scans of different people,
 	emulate reality where changes in human pose are coupled with body surface deformations.
 	These models have been used in human \textbf{correspondence estimation}, in which
-	a mapping between 2D pixels and the 3D model's surface is learned~\cite{densereg,densepose}.}
+	a mapping between 2D pixels and the 3D model's surface is learned~\cite{densereg,densepose}.}\\
 	
 	\par{It is possible that the human visual cortex also works with latent, learned representations
 	of objects and forms that weight the estimations and decisions we make in our perception of
@@ -55,7 +60,7 @@
 	their iterative optimization approach, by favouring possible poses, penalizing impossible poses,
 	and penalizing information from occluded body parts. Although iterative optimization has the
 	least error among current methods, fitting for a single image is on the order of tens of
-	seconds.}
+	seconds.}\\
 
 	\par{Once again, deep learning approaches have emerged to tackle the problem of efficiently
 	estimating these parameters. Kanazawa \textit{et al.}~\cite{hmr} propose an end-to-end
@@ -68,20 +73,6 @@
 	separate the problem into modular tasks, using a stacked hourglass network to produce joint
 	locations and silhouette masks, which are then processed separately by two networks to
 	obtain the pose and shape parameters respectively.}
-
-% 	\par{Other methods}
-
-% 	\par{A proposed reconstruction pipeline for real time scene reconstruction.}
-
-% % \section{Pose Estimation}
-
-% % 	\par{the current state of the art: convolutional based, usually require some bounding box detector?}
-
-% % 	\par{}
-
-% % \section{Dense Correspondence}
-
-% % 	\par{applications in texture mapping and texture transfer}
 
 \section{Modelling Human Form}
 
@@ -98,77 +89,232 @@
 		bone structure, mass distribution, fatness, skinniness, and others we subconsciously observe
 		but do not have the words to describe.}
 
-	\subsection{Model}
+	\subsection{Statistical Model}
 
-		\par{The Skinned Multi-Person Linear Model (SMPL) is an example of describing the human form
-		in Euclidian space, but not a Cartesian representation. The model is parameterized by 72
-		pose and 10 shape variables.}\\
+		\par{The Skinned Multi-Person Linear (SMPL) model is an example of describing the human form
+			in Euclidian space, but not a Cartesian representation. The model is parameterized by 72
+			pose and 10 shape variables. As SMPL captures correlations in human shape across the population,
+			we are able to robustly fit it to very little data.}
 
-		\par{Pose is modelled as the set of axis-angle representations of 23 pre-defined
-		body parts in the skeletal rig, plus the root orientation. $\vec{\theta}$, the pose parameters,
-		are defined as:
+		\subsubsection{Pose and shape}
+
+			\par{Pose is modelled as the set of axis-angle representations of 23 pre-defined
+			body parts in the skeletal rig, plus the root orientation. $\vec{\theta}$, the pose parameters,
+			are defined as:
+			\begin{equation}
+				\vec{\theta} = [\vec{\omega}^{T}_{0}, \mathellipsis, \vec{\omega}^{T}_{k}]^{T}
+			\end{equation}
+			where $\vec{\omega}_{k} \in \mathbb{R}^{3}$ is the rotation of each part $k$ in Euler angles.
+			The total size of the pose vector is $|\vec{\theta}|= {(23+1)}\times{3} = 72$. By modelling
+			pose as joint rotations, the model can easily be used in existing rigging and rendering software.}\\
+
+			\par{Shape is modelled as weighted changes in orthonormal principal components, which define the
+			shape space for the particular model. The principal components, which have been learnt from registered
+			training meshes using Principal Component Analysis (PCA), are reminiscent of concepts of human form,
+			like stature, or fatness. Each shape coefficient, $\beta$, weights a particular element in the
+			shape displacement matrix, allowing us to modify, for example, the stature of a model simply by
+			changing the appropriate $\beta$ in $\vec{\beta}$:
+			\begin{equation}
+				\vec{\beta} = [\beta_{0}, \mathellipsis, \beta_{|\vec{\beta}|}]^{T}
+			\end{equation}
+			}
+
+		\subsubsection{Blending pose with shape}
+
+			\par{Vertex deviations from the rest template due to the pose are accounted for by introducing a
+			linear effect of \textbf{pose blend shapes}~\cite{smpl}. With 23 joints, the function that maps pose, $\vec{\theta}$,
+			to part-relative rotation matrices, is $R(\vec{\theta})$, a vector of length $23 \times 9 = 207$. The final
+			effect of pose on vertices is hence:
+			\begin{equation}
+				B_{P}(\vec{\theta};\mathcal{P}) = \sum^{207}_{n=1}(R_{n}(\vec{\theta})-R_{n}(\vec{\theta^{*}}))\cdot P_{n},
+			\end{equation}
+			where the difference between the detected pose and the rest pose weights each $P_{n}$ in $\mathcal{P}$ linearly,
+			and $\mathcal{P} = [P_{1}, \mathellipsis, P_{207}]$ is a learned matrix of vertex deformations due to pose.
+			}\\
+
+			\par{The vertex deformations based on the shape parameters are referred to as \textbf{shape blend shapes}~\cite{smpl},
+			the observable effects of which are described in the previous section. Each shape coefficient $\beta$ transforms vertices
+			by:
+			\begin{equation}
+				B_{S}(\vec{\beta};\mathcal{S}) = \sum^{|\vec{\beta}|}_{n=1}(\beta_{n})\cdot S_{n},
+			\end{equation}
+			where $\mathcal{S} = [S_{1}, \mathellipsis, S_{|\vec{\beta}|}]$ is the learned shape displacement matrix of
+			vertex deformations due to shape.
+			}\\
+
+			\par{The total deviation of vertices due to pose and shape blend shapes can simply be added to the rest pose $\bar{T}$, to
+			recover the final vertex positions after accounting for shape and pose:
+			\begin{equation}
+				T_{P}(\vec{\beta},\vec{\theta}) = \bar{T} + B_{S}(\vec{\beta}) + B_{P}(\vec{\theta})
+			\end{equation}
+			}
+
+		\subsubsection{Rendering vertices}
+
+			\par{If we were to simply apply the pose to the model after adding pose and shape blend shapes, we
+			would encounter errors, such as candy-wrapper artifacts, if joints are rotated at more extreme angles.
+			Without blend skinning, which prevents errors in object surfaces when skeletal rigs are twisted or
+			bent to unusual angles, and the learned blend weight matrix $\mathcal{W}$, which tells us how much the
+			rotation of part $k$ affects each vertex, the rendered vertex mesh does not produce good enough results.}\\
+
+			\par{A blend skinning function returns the smoothed locations of vertices around estimated joint
+			centers. Here, we introduce Linear Blend Skinning (LBS), but other methods such as Dual-Quaternion
+			Blend Skinning (DQBS) exhibit different behaviors with regards to surface folding and twisting.
+			The smoothed vertices are computed by the standard LBS function $W(T,J,\vec{\theta},\mathcal{W})$.}
+
+
+		\subsubsection{Estimating joints}
+
+			\par{Joints are defined as a function of the body shape, with a need for high accuracy since they are to be used in the
+			skinning equation. A joint regressor matrix, $\mathcal{J}$, is learnt, by predicting training joints from training
+			bodies.	The result is the function $J(\vec{\beta})$, which predicts joints from shape parameters $\beta$.}
+
+		\subsubsection{Final model}
+			
+			\par{The final SMPL model $M$, is hence given by:
+			\begin{equation}
+				M(\vec{\beta},\vec{\theta};\Phi) = W(T_{P}(\vec{\beta},\vec{\theta}), J(\vec{\beta}), \vec{\theta}, \mathcal{W})
+			\end{equation}
+			where $\Phi$ represents learned parameters $\bar{T},J,\mathcal{W,S,P}$.
+			}
+
+
+	\subsection{Modelling non-body deformations}
+		\par{In their recent work on 3D human model recovery from video~\cite{avatars}, Alldieck \textit{et. al} propose
+		the recovery of more than just the base human surface, including shape deformations from objects like
+		hair, clothing, and headgear. They augment the SMPL model, introducing a set of auxiliary variables, $D$, as offsets
+		from the SMPL template:
 		\begin{equation}
-			\vec{\theta} = [\vec{\omega}^{T}_{0}, \mathellipsis, \vec{\omega}^{T}_{k}]^{T}
-		\end{equation}
-		where $\vec{\omega}_{k} \in \mathbb{R}^{3}$ is the rotation of each part $k$ in Euler angles.
-		The total size of the pose vector is $|\vec{\theta}|= {(23+1)}\times{3} = 72$. By modelling
-		pose as joint rotations, the model can easily be used in existing rigging and rendering software.}\\
-
-		\par{Shape is modelled as weighted changes in orthonormal principal components, which define the
-		shape space for the particular model. The principal components, which have been learnt from registered
-		training meshes using Principal Component Analysis (PCA), are reminiscent of concepts of human form,
-		like stature, or fatness. Each shape coefficient, $\beta$, weights a particular element in the
-		shape displacement matrix, allowing us to modify, for example, the stature of a model simply by
-		changing the appropriate $\beta$ in $\vec{\beta}$:
-		\begin{equation}
-			\vec{\beta} = [\beta_{0}, \mathellipsis, \beta_{|\vec{\beta}|}]^{T}
+			T(\vec{\beta},\vec{\theta},D) = \bar{T} + B_{S}(\vec{\beta}) + B_{P}(\vec{\theta}) + D
 		\end{equation}
 		}
 
-%		\par{possible improvements to smpl (check out animal model?), clothing deformation equation}
-
 \section{Reconstruction Pipeline}
 
-	\subsection{Design}
+	\par{We look at possible methods of recovering the inputs needed to reconstruct parametric models
+	like the SMPL model. In particular, we discuss the subsystems proposed in~\cite{smplify,hmr,humanshape,nbf,avatars}
+	from a design perspective. Two camps emerge - methods that use different modules to execute specific tasks like
+	joint regression or segmentation, and methods that directly recover parameters in an end-to-end fashion.
+
+	\subsection{Modular Design}
 	
-		\par{Modularity might be a guiding principle to approach the design of a real-time reconstruction
+		\par{Modularity might be a possible guiding principle to approach the design of a real-time reconstruction
 		pipeline, as it allows for modules to be improved separately, while allowing the use of the intermediate
 		outputs to augment or process other information. For 3D human reconstruction in particular, the intermediate
-		state is often some set of 2D joint confidence maps, body part segmentation masks, or silhouette masks.}
+		state is often some set of 2D joint confidence maps, body part segmentation masks, or silhouette masks.}\\
 
 		\par{In an end-to-end learning task where the sole objective is to learn the function mapping from an image
 		to a 3D representation, the network might not be able to realise the significance of this set of outputs.
+		Intermediate results like joints, confidences, and masks are often useful further down the pipeline. For example,
 		Alldieck \textit{et al.}~\cite{avatars} make impressive use of 2D silhouette segmentations, associating
 		every point on the silhouette edge with a point on the SMPL model, then computing the inverse pose of this
 		outline, finally obtaining a visual hull of the input human in T-pose, which massively simplifies the shape
-		fitting of a T-posed SMPL model to this hull.}
+		fitting of a T-posed SMPL model to this hull.}\\
 
 		\par{More obvious modular pipelines have been used with success, with division of labour among networks along
-		the pipeline, each tackling a specific subproblem. In their recent paper~\cite{humanshape}, Pavlakos \textit{et al.}
-		decompose the 3D estimation problem into two steps,	namely: (i) using a stacked hourglass network, return a
-		simultaneous estimation of joint locations and a silhouette mask, and (ii), feeding this into two additional
-		independent networks, estimate pose $\theta$ and shape $\beta$.}
-
-		\par{However, one of the downsides to modular design is the compounding of error. For example, if a pipeline
+		the pipeline, each tackling a specific subproblem.
+		However, one of the downsides to modular design is the compounding of error. For example, if a pipeline
 		consists of a 2D joint detector and a 3D regressor module, a possible failure in joint detection can completely
 		change the behaviour of the 3D regressor module. For this reason, it might be advisable, though counterintuitive,
 		to further separate the problem into simpler tasks where we can have more control over the stages of processing.}
 
-	\subsection{2D Feature Extraction}
+	\subsection{Modular Subsystems}
 
-		\par{From a monocular input image, classical low-level image processing objectives can be met with an off-the-
-		shelf ImageNet-trained model. They are typically included at the start of 2D pose estimation networks
-		~\cite{openpose-paf,openpose-cpm,nbf} to provide feature extraction capabilities. Fast, direct bounding box
-		predictors like YOLOv3~\cite{yolo3} can be used to crop regions of interest at tens of frames per second or more.}
+	\par{In this section, we discuss specific subsystems in the 3D human reconstruction ecosystem. They typically tackle
+	specific tasks in the reconstruction problem and produce intermediate representations in both 2D and 3D.}
 
-		\par{The 2D module might output features like hard joint keypoints and segmentation masks, softer or more
-		probabilistic predictions in heatmaps, or totally different representations of pose, like Part Affinity Fields~\cite{openpose-paf}.}
+		\subsubsection{2D feature extractors}
+
+			\par{From a monocular input image, classical low-level image processing objectives can be met by convolutional
+			layers. They are typically included at the start of 2D pose estimation networks
+			~\cite{openpose-paf,openpose-cpm,nbf} to provide feature extraction capabilities. Fast, direct bounding box
+			predictors like YOLOv3~\cite{yolo3} can be used to crop regions of interest at tens of frames per second or more.}\\
  
-	% \
+		\subsubsection{Pose estimators}
 
-	% \par{modular approach fully takes advantage of the current sota}
-	% 	\par{memory and computation cost}
+			\par{Pose estimators might output features like hard joint keypoints and segmentation masks, softer or more
+			probabilistic predictions in heatmaps, or totally different representations of pose like part affinity fields~\cite{openpose-paf}.
+			Part affinity fields are a set of 2D vector fields which encode the degree of association between parts: for each
+			pixel in a body part segment (e.g. a forearm), we generate a 2D vector pointing from the origin of the limb, to the
+			end of the limb. With part affinity fields, we are able to score and match candidate limbs with global context, due
+			to the wide receptive field of the network. This results in high quality predictions, and enables a tree optimization
+			algorithm that massively reduces inference time.}\\
+
+			\par{Stacked hourglass networks~\cite{hourglass} were used to generate part heatmaps and silhouette masks~\cite{humanshape}.
+			Stacked hourglass networks progressively pool and upsample, capturing features at multiple scales and bringing them
+			together to output pixel-wise predictions.}
+
+		\subsubsection{Regressors}
+
+			\par{Pose estimators output part segmentations and/or joint coordinates, which themselves can be used as ground truths in
+			order to fit the body model. This has been done using the SMPL model's joint regressor function (see 2.2.4). In SMPLify~\cite{smplify},
+			iterative optimization is used, with a complex objective function that imposes constraints on possible poses, while doing its job
+			of minimizing error between the 2D joint predictions from the previous stage, and the joints computed from the joint regressor function.
+			The five error terms to be minimized in the objective function are as follows:
+			\begin{equation}
+				E(\beta,\theta) = E_{joint} + E_{ext} + E_{pen} + E_{\theta} +  E_{\beta}
+			\end{equation}
+			where:
+			\begin{enumerate}
+				\item $E_{joint}$ is the weighted 2D distance between input estimated joints and $J(\vec{\beta})$ from SMPL,
+				\item $E_{ext}$ is an exponential error term heavily penalizing hyperextended elbows and knees,
+				\item $E_{pen}$ is an error term penalizing the intersections of 3D shapes corresponding to body parts,
+				\item $E_{\theta}$ is a pose prior: a gaussian mixture model of 1 million poses from real subjects, and
+				\item $E_{\beta}$ is a shape prior: a matrix of coefficients $\beta$ estimated via PCA from training set shapes.
+			\end{enumerate}
+			Optimization is carried out, with the camera translation estimated. If auxiliary variables are added to the objective function as in
+			(7), there must be an additional way to calculate their error. It is likely that this requires segmentation masks to compute the error
+			between the silhouette clothing mask and the clothing deformation's 2D projection.}\\
+
+			\par{Lassner \textit{et. al}~\cite{up} train 91 keypoint detectors, using random regression forests to directly regress SMPL model
+			parameters from 2D keypoints. They manage to reduce runtime at the cost of accuracy.}
+
+		\subsubsection{Direct estimators}
+
+			\par{Alternatively, fully-connected and convolutional approaches to estimate $\theta$ and $\beta$ have also been successful.
+			In their recent paper~\cite{humanshape}, Pavlakos \textit{et al.} decompose the 3D estimation problem into two steps, namely: (i) using a
+			stacked hourglass network, return a simultaneous estimation of joint locations and a silhouette mask, and (ii), feeding this into two additional
+			independent networks, estimate pose $\theta$ and shape $\beta$. After receiving outputs from the stacked hourglass, the pose parameter
+			network passes 2D joint locations and their confidence values through fully-connected, bilinear layers, while the shape parameter network takes
+			a human silhouette mask, filtering it through five convolutional layers before reducing dimensionality using fully-connected layers. We are
+			able to be train these networks by capitalizing on the intermediate 2D inputs: we now have the ability to generate instances of the SMPL model
+			with different 3D pose and shape, using the pose and body shape captures of real humans from existing datasets. From this, we can directly
+			mask silhouettes and regress joints to get accurate ground truths.}
+
+
+		\subsubsection{Discriminators}
+
+			\par{One way to ensure robust results while reducing computation is to introduce a discriminator module~\cite{hmr}, acting as a final gatekeeper
+			of sorts. Like how the intersections of body parts are penalized in (8), a discriminator can be trained to tell whether any SMPL model
+			parameters $\theta$ and $\beta$ correspond to a real human or not. Rather than scouring the solution space in the optimization process, we can
+			simply throw away a result if it is deemed unsatisfactory under the weak supervision provided by the discriminator.}
+
+	\subsection{End-to-End Methods}
+
+		\par{While multi-stage approaches carry more useful information in the intermediate stages, they often run sub-optimally,
+		carrying out unnecessary or repeated computations, depending on the exact task and architecture of each subcomponent. End-to-end methods
+		provide an alternative, since synthetic data can be created by generating instances of the SMPL model, and leveraging existing motion capture and human
+		pose datasets. Kanazawa \textit{et. al}~\cite{hmr} argue that end-to-end methods preserve global context, while avoiding the need for dual-stage training.
+		They encode	the image using ResNet-50, subsequently average pooling and regressing using two fully-connected layers, finally reducing dimensionality using
+		a last fully-connected layer. Their method remains robust even when trained on unpaired 2D and 3D datasets.}
+
+		\subsubsection{Data preparation}
+			
+			\par{Traditionally, pose and shape datasets come either in the form of images and annotated 2D keypoints, or 3D meshes and scans from motion capture sets.
+			With only a standard marker set, MoSh estimates marker locations on a proxy 3D body model (in this case, SMPL), estimates the body shape, and recovers the
+			articulated pose. By allowing body shape to vary over time, MoSh is able to capture the non-rigid motion of soft tissue. Motion capture datasets like
+			CMU~\cite{cmu} and Human3.6m~\cite{h36m} can be MoShed to obtain ground truth 3D model parameters, like $\theta$ and $\beta$ in SMPL. The network can then
+			be trained on this mapping.}
+
+\section{Conclusion}
+
+The end-to-end framework in ~\cite{hmr} is able to run in real-time alongside a fast bounding box detector, YOLOv3~\cite{yolo3}, running on two Quadro P5000 GPUs.
+In order to include hair, headgear and clothing deformations, we might need to look at a silhouette-based method like ~\cite{avatars}. This gives rise to a trade-off
+between inference time and the ability to regress auxiliary shape. Texture mapping is also possible by back-projection of the model on several frames, then
+reading off the color values~\cite{avatars}, or direct shape regression using a learned pixel-to-UV mapping~\cite{densepose}. The idea of using multiple, successive
+frames in a video to refine our estimates and avoid frame-by-frame computation might be feasible. A system built to recover full parametric model pose $\theta$,
+shape $\beta$, offsets $D$, and texture maps, all in real-time, looks extremely feasible and will likely be the next step in this field of computer vision research.
 
 \bibliography{paper}{}
-\bibliographystyle{ieeetr}
+\bibliographystyle{abbrv}
 \end{document}
